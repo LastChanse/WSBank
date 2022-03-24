@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ln"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--<ImageView
+        android:id="@+id/flag"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="70dp"
+        android:layout_height="50dp" />-->
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Адресс"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bank_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отделение или банкомат"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/address"
+        app:layout_constraintTop_toBottomOf="@+id/address" />
+
+    <TextView
+        android:id="@+id/if_it_ready"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Работает или не работает"
+        android:textSize="10sp"
+        android:layout_marginLeft="76dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bank_type"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Часы работы "
+        android:textSize="10sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/hours_in_worck"
+        app:layout_constraintTop_toTopOf="@+id/hours_in_worck" />
+
+    <TextView
+        android:id="@+id/hours_in_worck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00-00:00"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/if_it_ready" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_marginTop="8dp"
+        android:background="@color/green_blue"
+        app:layout_constraintTop_toBottomOf="@+id/if_it_ready" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
