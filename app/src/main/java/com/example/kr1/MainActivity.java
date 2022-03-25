@@ -11,14 +11,25 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
+        //setContentView(R.layout.activity_main);
     }
 
     public void goToActivityABA(View view) {
@@ -31,46 +42,40 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void login(View view){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-
-        //set title
-        alertDialog.setTitle("title")
-        //set message
-                .setMessage("title")
-        //set positive button
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //set what would happen when positive button is clicked
-                        alertDialog.dismiss();
-                    }
-                })
-        //set negative button
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-            //set what should happen when negative button is clicked
-                        alertDialog.dismiss();
-                    }
-                })
-                .show();
-        /*        // Создание Toast сообщения
-        Toast toast = new Toast(getApplicationContext());
-        // Позиционирование сообщения
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        // Определение продолжительности
-        toast.setDuration(Toast.LENGTH_LONG);
-
-        // Создание View из контента файла xml:
-        LayoutInflater inflater = getLayoutInflater();
-        View vw = inflater.inflate(R.layout.login, null);
-        // Определение View компонента
-        toast.setView(vw);
-        // Представление сообщения
-        toast.show();
-    */
+    public void close(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
+    public void сreateDialog(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder
+                .setView(R.layout.login)
+                .create();
+        builder.create().show();
+    }
+
+    public void addLogin(View view) throws JSONException {
+        //setContentView(R.layout.login);
+        String login = (((TextView) findViewById(R.id.input_login)).getText().toString());
+        String password = (((TextView) findViewById(R.id.input_password)).getText().toString());
+        //setContentView(R.layout.activity_main);
+        JSONObject json = new JSONObject();
+        json.put("email", login);
+        json.put("password", password);
+
+        String url = "http://cinema.areas.su/auth/login";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, json,
+                result -> Toast.makeText(this, "Успешный вход", Toast.LENGTH_LONG).show(),
+                error -> Toast.makeText(this, "Неверный логин или парроль", Toast.LENGTH_LONG).show()
+        );
+        requestQueue.add(request);
+    }
+
+    public void login(View view) {
+        сreateDialog(this);
+    }
 }
