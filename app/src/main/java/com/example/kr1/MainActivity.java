@@ -8,9 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.BadParcelableException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +27,14 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    public boolean change_content_view = false;
+    public EditText login;
+    public EditText password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
     }
 
     public void goToActivityABA(View view) {
@@ -52,14 +57,17 @@ public class MainActivity extends AppCompatActivity {
         builder
                 .setView(R.layout.login)
                 .create();
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.login, null);
+        builder.setView(dialogView);
+        login = (EditText) dialogView.findViewById(R.id.input_login);
+        password = (EditText) dialogView.findViewById(R.id.input_password);
         builder.create().show();
     }
 
     public void addLogin(View view) throws JSONException {
-        //setContentView(R.layout.login);
-        String login = (((TextView) findViewById(R.id.input_login)).getText().toString());
-        String password = (((TextView) findViewById(R.id.input_password)).getText().toString());
-        //setContentView(R.layout.activity_main);
+        String login = this.login.getText().toString();
+        String password = this.password.getText().toString();
         JSONObject json = new JSONObject();
         json.put("email", login);
         json.put("password", password);
