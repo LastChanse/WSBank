@@ -65,6 +65,7 @@
         app:layout_constraintTop_toTopOf="@+id/if_it_ready" />
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="2sp"
         android:layout_marginTop="8dp"

@@ -10,9 +10,9 @@
         android:id="@+id/flag"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/ic_launcher_background"
-        android:layout_marginTop="3dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/flag" />
 
     <TextView
-        android:id="@+id/purchase"
+        android:id="@+id/country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -39,50 +39,52 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/sale"
+        android:id="@+id/purchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="174dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="160dp"
         android:text="00,00"
         android:textColor="@color/blue"
         android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:src="@drawable/green_arrow_up_mdpi"
-        app:layout_constraintBottom_toBottomOf="@+id/sale"
-        app:layout_constraintStart_toEndOf="@+id/sale"
-        app:layout_constraintTop_toTopOf="@+id/sale" />
+        app:layout_constraintBottom_toBottomOf="@+id/purchase"
+        app:layout_constraintStart_toEndOf="@+id/purchase"
+        app:layout_constraintTop_toTopOf="@+id/purchase" />
 
     <TextView
-        android:id="@+id/country"
+        android:id="@+id/sale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
+        android:layout_marginRight="23dp"
         android:layout_marginTop="15dp"
         android:text="00,00"
         android:textColor="@color/blue"
         android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/sale"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:src="@drawable/red_arrow_down_mdpi"
-        app:layout_constraintBottom_toBottomOf="@+id/country"
-        app:layout_constraintStart_toEndOf="@+id/country"
-        app:layout_constraintTop_toTopOf="@+id/country" />
+        app:layout_constraintBottom_toBottomOf="@+id/sale"
+        app:layout_constraintStart_toEndOf="@+id/sale"
+        app:layout_constraintTop_toTopOf="@+id/sale" />
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2sp"
-        android:background="@color/green_blue"
         android:layout_marginTop="4dp"
+        android:background="@color/green_blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/purchase" />
+        app:layout_constraintTop_toBottomOf="@+id/country" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
