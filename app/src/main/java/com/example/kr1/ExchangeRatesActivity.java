@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -21,30 +20,23 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicReference;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 public class ExchangeRatesActivity extends AppCompatActivity {
 
-    private List<Сurrency> currencies = new ArrayList();
+    private List<Сurrency> currencies = new ArrayList(); // Список валют
 
-    ListView countriesList;
+    ListView countriesList; // Представление списка
 
-    public String res = new String(); // Текст ответа от сервера
+    public String res = new String(); // Переменная для хранения текстового ответа от сервера
 
-    public Document doc; // Документ для XML ответа от сервера
+    public Document doc; // Документ для XML обработки ответа от сервера
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +63,7 @@ public class ExchangeRatesActivity extends AppCompatActivity {
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 result -> ifResult(result),
-                error -> Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+                error -> ifErrore(error.toString())//Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
         );
         requestQueue.add(request);
     }
@@ -95,13 +87,36 @@ public class ExchangeRatesActivity extends AppCompatActivity {
         return null;
     }
 
+    public void ifErrore(String errMsg) {
+        currencies.add(new Сurrency("NON", "00.00", "00.00", "Неизвестная валюта", R.mipmap.ic_launcher));
+        Toast.makeText(this, "Сервер не отвечает.", Toast.LENGTH_LONG).show();
+        // получаем элемент ListView
+        countriesList = (ListView) findViewById(R.id.countriesList);
+        // создаем адаптер
+        СurrencyAdapter stateAdapter = new СurrencyAdapter(this, R.layout.list_exchange_rates, currencies);
+        // устанавливаем адаптер
+        countriesList.setAdapter(stateAdapter);
+        // слушатель выбора в списке
+        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                // получаем выбранный пункт
+                Departament selectedState = (Departament) parent.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), "Был выбран пункт " + selectedState.getAddress(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+        countriesList.setOnItemClickListener(itemListener);
+    }
+
+
     public void ifResult(String res) {
         if (res.isEmpty()) {
             currencies.add(new Сurrency("NON", "00.00", "00.00", "Неизвестная валюта", R.mipmap.ic_launcher));
             Toast.makeText(this, "Получен некорректный ответ от сервера.", Toast.LENGTH_LONG).show();
         } else {
             doc = convertStringToXMLDocument(res);
-            //Toast.makeText(this, res, Toast.LENGTH_LONG).show();
 
             Element element = doc.getDocumentElement();
             NodeList nodeListCharCode = element.getElementsByTagName("CharCode");
@@ -116,7 +131,6 @@ public class ExchangeRatesActivity extends AppCompatActivity {
                 Element elValue = (Element) nodeListValue.item(i);
                 currencies.add(new Сurrency(elCharCode.getTextContent(), elNominal.getTextContent()+".00", elValue.getTextContent(), elName.getTextContent(), getApplicationContext().getResources().getIdentifier(elCharCode.getTextContent().toLowerCase(Locale.ROOT).substring(0,2), "drawable", getApplicationContext().getPackageName())));//R.drawable.ru));
             }
-//getApplicationContext().getResources().getIdentifier(elName.getTextContent().toLowerCase(Locale.ROOT).substring(0,1), "drawable", getApplicationContext().getPackageName())
             currencies.add(new
 
                     Сurrency("RUR", "10.00", "20.00", "Русский рубль", R.drawable.ru));
@@ -125,7 +139,7 @@ public class ExchangeRatesActivity extends AppCompatActivity {
                     Сurrency("USD", "10.00", "20.00", "Американский доллар", R.drawable.us));
             currencies.add(new
 
-                    Сurrency("UKT", "10.00", "20.00", "Британский фунт", R.drawable.uk));
+                    Сurrency("UKT", "10.00", "20.00", "Британский фунт", R.drawable.gb));
             currencies.add(new
 
                     Сurrency("EUR", "10.00", "20.00", "Андоррский евро", R.drawable.ad));
@@ -152,5 +166,4 @@ public class ExchangeRatesActivity extends AppCompatActivity {
         };
         countriesList.setOnItemClickListener(itemListener);
     }
-
 }

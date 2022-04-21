@@ -3,4 +3,9 @@
     <style name="EditText">
         <item name="android:textColorSecondary">@color/green_blue</item>
     </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/white_blue</item>
+        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="colorAccent">@color/green_blue</item>
+    </style>
 </resources>
